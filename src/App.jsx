@@ -527,11 +527,10 @@ function SecurityView({ user, showToast, onRefresh }) {
       });
       const data = await resp.json();
       if (resp.ok) {
-        showToast("Transaction queued for processing", "success");
-        onClose();
-        // Delay refresh slightly to allow SQS -> Processing to complete
-        setTimeout(onRefresh, 2000);
-      }
+      showToast("Transaction queued for processing", "success");
+      onRefresh();
+      setTimeout(onRefresh, 2000);
+    }
       else showToast(data.message || "Capture failed", "error");
     } catch { showToast("Network error", "error"); }
     finally { setLoading(false); }
